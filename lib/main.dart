@@ -34,3 +34,38 @@ void main() {
     ),
   ));
 }
+
+/// Navegação entre os módulos. Fica aqui para um módulo não importar o outro.
+class HomeShell extends StatefulWidget {
+  const HomeShell({super.key, required this.pages});
+
+  final List<Widget> pages;
+
+  @override
+  State<HomeShell> createState() => _HomeShellState();
+}
+
+class _HomeShellState extends State<HomeShell> {
+  int index = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(index: index, children: widget.pages),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: index,
+        onDestinationSelected: (value) => setState(() => index = value),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.checklist_rounded),
+            label: 'Tarefas',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.local_fire_department_rounded),
+            label: 'Hábitos',
+          ),
+        ],
+      ),
+    );
+  }
+}
